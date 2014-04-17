@@ -16,18 +16,21 @@ PERIODS = [
 Bus = Struct.new(:itinerary, :schedules)
 
 
-Schedule = Struct.new(:period, :hours, :direction)
+Schedule = Struct.new(:period, :hours, :direction, :origin, :destination)
 
 
 class BusCrawler
+  GOING = '1'
+  RETURNING = '2'
+
   def initialize(bus_line_number)
     @bus_line_number = bus_line_number
   end
 
   def fetch
-    going_schedule = fetch_hours('1')
-    returning_schedule = fetch_hours('2')
     itinerary = fetch_itinerary()
+    going_schedule = fetch_hours(GOING, itinerary)
+    returning_schedule = fetch_hours(RETURNING, itinerary)
 
     Bus.new(itinerary, [going_schedule, returning_schedule].flatten)
   end
@@ -45,8 +48,10 @@ class BusCrawler
   end
 
 
-  def fetch_hours(tab_number)
-    data = request_data tab_number
+  def fetch_hours(direction, itinerary)
+    data = request_data direction
+    origin = itinerary[direction == GOING ? 0 : itinerary.length-1]
+    destination = itinerary[direction == GOING ? itinerary.length-1 : 0]
 
     data.css('.conteudo_abas_ext tr:last-child td').map.with_index do |period, index|
       hours = period.to_s.split('<br>').map do |hour|
@@ -54,19 +59,19 @@ class BusCrawler
         match && match[0]
       end.compact
 
-      Schedule.new(PERIODS[index], hours, tab_number == '1' ? 'going' : 'returning')
+      Schedule.new(PERIODS[index], hours, direction == GOING ? 'going' : 'returning', origin, destination)
     end
   end
 
 
-  def request_data(tab_number)
+  def request_data(direction)
     url = "http://www.pmf.sc.gov.br/servicos/index.php?pagina=onibuslinha&idLinha=#{bus_line_number}"
     uri = URI.parse(url)
 
     http = Net::HTTP.new(uri.host, uri.port)
 
     request = Net::HTTP::Post.new(uri.request_uri)
-    request.set_form_data({ 'passoGeral' => tab_number })
+    request.set_form_data({ 'passoGeral' => direction })
 
     response = http.request(request)
 

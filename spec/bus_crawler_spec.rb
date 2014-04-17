@@ -38,6 +38,14 @@ describe "bus_crawler" do
       expect(subject.schedules[5].direction).to eq 'returning'
     end
 
+    it "should have the origin and destination" do
+      expect(subject.schedules[0].origin).to eq 'TITRI'
+      expect(subject.schedules[0].destination).to eq 'TITRI'
+
+      expect(subject.schedules[3].origin).to eq 'TITRI'
+      expect(subject.schedules[3].destination).to eq 'TITRI'
+    end
+
     it "should have the itinerary" do
       expected_itinerary = [
         'TITRI',
