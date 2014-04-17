@@ -1,11 +1,10 @@
 # encoding: UTF-8
 
 require 'spec_helper'
-require 'bus_list_crawler'
 
 describe "bus_list_crawler" do
   describe "when fetching the data of a lines" do
-    subject { BusListCrawler.new.fetch }
+    subject { FloripaPublicTransit::BusListCrawler.new.fetch }
 
     it "should contain all bus line numbers" do
       expect(subject.length).to eq 255

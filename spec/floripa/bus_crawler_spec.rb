@@ -1,11 +1,10 @@
 # encoding: UTF-8
 
 require 'spec_helper'
-require 'bus_crawler'
 
 describe "bus_crawler" do
   describe "when fetching the data of a bus" do
-    subject { BusCrawler.new('177').fetch }
+    subject { FloripaPublicTransit::BusCrawler.new('177').fetch }
 
     it "should contain three different schedules" do
       expect(subject.schedules.length).to eq 6
