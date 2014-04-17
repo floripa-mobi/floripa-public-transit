@@ -54,7 +54,7 @@ class BusCrawler
 
 
   def fetch_hours(direction, itinerary)
-    data = request_data direction
+    data = request_data direction, 'iso8859-1'
     origin = itinerary[direction == GOING ? 0 : itinerary.length-1]
     destination = itinerary[direction == GOING ? itinerary.length-1 : 0]
 
