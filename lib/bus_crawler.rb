@@ -16,7 +16,7 @@ PERIODS = [
 Bus = Struct.new(:itinerary, :schedules)
 
 
-Schedule = Struct.new(:period, :hours)
+Schedule = Struct.new(:period, :hours, :direction)
 
 
 class BusCrawler
@@ -29,7 +29,7 @@ class BusCrawler
     returning_schedule = fetch_hours('2')
     itinerary = fetch_itinerary()
 
-    Bus.new(itinerary, returning_schedule)
+    Bus.new(itinerary, [going_schedule, returning_schedule].flatten)
   end
 
   private
@@ -46,7 +46,7 @@ class BusCrawler
 
 
   def fetch_hours(tab_number)
-    data = request_data '2'
+    data = request_data tab_number
 
     data.css('.conteudo_abas_ext tr:last-child td').map.with_index do |period, index|
       hours = period.to_s.split('<br>').map do |hour|
@@ -54,7 +54,7 @@ class BusCrawler
         match && match[0]
       end.compact
 
-      Schedule.new(PERIODS[index], hours)
+      Schedule.new(PERIODS[index], hours, tab_number == '1' ? 'going' : 'returning')
     end
   end
 
