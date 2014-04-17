@@ -1,11 +1,11 @@
 # encoding: UTF-8
 
 require 'spec_helper'
-require 'schedule_crawler'
+require 'bus_crawler'
 
-describe "schedule_crawler" do
+describe "bus_crawler" do
   describe "when fetching the data of a bus" do
-    subject { ScheduleCrawler.fetch('177') }
+    subject { BusCrawler.new('177').fetch }
 
     it "should contain three different schedules" do
       expect(subject.schedules.length).to eq 3
