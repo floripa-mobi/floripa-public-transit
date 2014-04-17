@@ -46,6 +46,10 @@ describe "bus_crawler" do
       expect(subject.schedules[3].destination).to eq 'TITRI'
     end
 
+    it "should have the name of the bus" do
+      expect(subject.name).to eq('SANTA MÔNICA')
+    end
+
     it "should have the itinerary" do
       expected_itinerary = [
         'TITRI',

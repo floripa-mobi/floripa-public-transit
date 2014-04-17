@@ -13,7 +13,7 @@ PERIODS = [
 ]
 
 
-Bus = Struct.new(:itinerary, :schedules)
+Bus = Struct.new(:name, :itinerary, :schedules)
 
 
 Schedule = Struct.new(:period, :hours, :direction, :origin, :destination)
@@ -28,16 +28,21 @@ class BusCrawler
   end
 
   def fetch
+    name = fetch_name()
     itinerary = fetch_itinerary()
     going_schedule = fetch_hours(GOING, itinerary)
     returning_schedule = fetch_hours(RETURNING, itinerary)
 
-    Bus.new(itinerary, [going_schedule, returning_schedule].flatten)
+    Bus.new(name, itinerary, [going_schedule, returning_schedule].flatten)
   end
 
   private
 
   attr_reader :bus_line_number
+
+  def fetch_name
+    request_data('1', 'iso8859-1').css('#titulo_pagina').first.content.gsub(/\(.+\)/, '').strip
+  end
 
   def fetch_itinerary
     data = request_data '3'
@@ -64,7 +69,7 @@ class BusCrawler
   end
 
 
-  def request_data(direction)
+  def request_data(direction, encoding = 'utf-8')
     url = "http://www.pmf.sc.gov.br/servicos/index.php?pagina=onibuslinha&idLinha=#{bus_line_number}"
     uri = URI.parse(url)
 
@@ -75,7 +80,7 @@ class BusCrawler
 
     response = http.request(request)
 
-    Nokogiri::HTML(response.body, nil, 'utf-8')
+    Nokogiri::HTML(response.body, nil, encoding)
   end
 
 end
