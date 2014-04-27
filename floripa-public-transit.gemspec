@@ -3,6 +3,7 @@ Gem::Specification.new do |s|
   s.version     = '0.0.1'
   s.date        = '2014-04-14'
   s.summary     = 'Fetches public transit information from the Florianopolis city website'
+  s.description = 'Provides a simple API to fetch latest public transit information of the Florianopolis city'
   s.authors     = ['Paulo Ragonha', 'Felipe Munhoz']
   s.email       = ['paulo@ragonha.me', 'munhoz@gmail.com']
 
@@ -14,5 +15,5 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.add_runtime_dependency 'nokogiri', '1.6.1'
-  s.add_development_dependency 'rspec'
+  s.add_development_dependency 'rspec', '2.14.1'
 end
