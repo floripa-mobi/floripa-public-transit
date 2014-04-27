@@ -62,7 +62,7 @@ module FloripaPublicTransit
       data = request_data direction, 'iso8859-1'
 
       if direction == GOING
-        targets = data.css('#conteudo_horaida b:first-child').first.content.split('->').map &:strip
+        targets = data.css('#conteudo_horaida b:first-child').first.content.scan(/([\w|\s]+)/).flatten.map &:strip
         @origin = targets[0]
         @destination = targets[1]
       end
