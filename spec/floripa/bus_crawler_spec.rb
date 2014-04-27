@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "bus_crawler" do
   describe "when fetching the data of a bus" do
-    subject { FloripaPublicTransit::BusCrawler.new('177').fetch }
+    subject { FloripaPublicTransit::BusCrawler.new('330').fetch }
 
     it "should contain three different schedules" do
       expect(subject.schedules.length).to eq 6
@@ -20,12 +20,12 @@ describe "bus_crawler" do
     end
 
     it "should have the hours" do
-      expect(subject.schedules[3].hours.length).to eq 28
-      expect(subject.schedules[4].hours.length).to eq 18
-      expect(subject.schedules[5].hours.length).to eq 10
+      expect(subject.schedules[3].hours.length).to eq 47
+      expect(subject.schedules[4].hours.length).to eq 46
+      expect(subject.schedules[5].hours.length).to eq 35
 
-      expect(subject.schedules[3].hours[0]).to eq '06:09'
-      expect(subject.schedules[4].hours[17]).to eq '23:55'
+      expect(subject.schedules[0].hours[0]).to eq '05:32'
+      expect(subject.schedules[3].hours[0]).to eq '05:47'
     end
 
     it "should have the direction" do
@@ -38,19 +38,19 @@ describe "bus_crawler" do
     end
 
     it "should have the origin and destination" do
-      expect(subject.schedules[0].origin).to eq 'TITRI'
-      expect(subject.schedules[0].destination).to eq 'TITRI'
+      expect(subject.schedules[0].origin).to eq 'TILAG'
+      expect(subject.schedules[0].destination).to eq 'TICEN'
 
-      expect(subject.schedules[3].origin).to eq 'TITRI'
-      expect(subject.schedules[3].destination).to eq 'TITRI'
+      expect(subject.schedules[3].origin).to eq 'TICEN'
+      expect(subject.schedules[3].destination).to eq 'TILAG'
     end
 
     it "should have the name of the bus" do
-      expect(subject.name).to eq('SANTA MÔNICA')
+      expect(subject.name).to eq('LAGOA DA CONCEIÇÃO')
     end
 
     it "should have the number" do
-      expect(subject.number).to eq('177')
+      expect(subject.number).to eq('330')
     end
 
     it "should have the operator" do
@@ -59,32 +59,35 @@ describe "bus_crawler" do
 
     it "should have the itinerary" do
       expected_itinerary = [
-        'TITRI',
-        'AVENIDA PROFESSOR HENRIQUE DA SILVA FONTES',
+        'TICEN',
+        'RUA PROCURADOR ABELARDO GOMES',
+        'AVENIDA PAULO FONTES',
+        'RUA DOUTOR ÁLVARO MILLEN DA SILVEIRA',
+        'RUA DOUTOR JORGE DA LUZ FONTES',
+        'RUA SILVA JARDIM',
+        'AVENIDA MAURO RAMOS',
+        'AVENIDA JORNALISTA RUBENS DE ARRUDA RAMOS',
+        'RUA COMANDANTE CONSTANTINO NICOLAU SPYRIDES',
+        'RUA DELMINDA SILVEIRA',
+        'RUA IDALINA PEREIRA DOS SANTOS',
+        'AVENIDA GOVERNADOR IRINEU BORNHAUSEN',
         'AVENIDA DA SAUDADE',
-        'RODOVIA SC 404',
-        'AVENIDA MADRE BENVENUTA',
-        'AVENIDA PROFESSOR HENRIQUE DA SILVA FONTES',
-        'RUA OSMARINO DE DEUS CARDOSO',
-        'AVENIDA MADRE BENVENUTA',
-        'AVENIDA PROFESSOR HENRIQUE DA SILVA FONTES',
-        'RUA PROFESSORA MARIA FLORA PAUSEWANG',
-        'RUA ROBERTO SAMPAIO GONZAGA',
-        'RUA LAURO LINHARES',
-        'AVENIDA MADRE BENVENUTA',
-        'AVENIDA PROFESSOR HENRIQUE DA SILVA FONTES',
-        'RUA PROFESSORA MARIA FLORA PAUSEWANG',
-        'AVENIDA PROFESSOR HENRIQUE DA SILVA FONTES',
-        'RUA BYRON BARCELLOS',
-        'RUA JOE COLLAÇO',
-        'AVENIDA MADRE BENVENUTA',
+        'RODOVIA ADMAR GONZAGA',
+        'AVENIDA AFONSO DELAMBERT NETO',
+        'TILAG',
+        'TILAG',
+        'AVENIDA AFONSO DELAMBERT NETO',
         'RODOVIA SC 404',
         'ELEVADO DO ITACOROBI',
         'AVENIDA DA SAUDADE',
-        'RUA LAURO LINHARES',
-        'RUA PROFESSOR ENOÉ SCHUTEL',
-        'RUA PROFESSOR ODILON FERNANDES',
-        'TITRI'
+        'RUA DELMINDA SILVEIRA',
+        'RUA RUI BARBOSA',
+        'RUA FREI CANECA',
+        'RUA HEITOR LUZ',
+        'AVENIDA MAURO RAMOS',
+        'RUA SILVA JARDIM',
+        'AVENIDA GOVERNADOR GUSTAVO RICHARD',
+        'TICEN'
       ]
 
       expect(subject.itinerary).to eq expected_itinerary

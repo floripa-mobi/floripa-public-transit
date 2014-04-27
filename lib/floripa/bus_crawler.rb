@@ -50,11 +50,22 @@ module FloripaPublicTransit
       end
     end
 
-
     def fetch_hours(direction, itinerary)
       data = request_data direction, 'iso8859-1'
-      origin = itinerary[direction == GOING ? 0 : itinerary.length-1]
-      destination = itinerary[direction == GOING ? itinerary.length-1 : 0]
+
+      if direction == GOING
+        targets = data.css('#conteudo_horaida b:first-child').first.content.split('->').map &:strip
+        @origin = targets[0]
+        @destination = targets[1]
+      end
+
+      if @origin.empty?
+        @origin = itinerary[direction == GOING ? 0 : itinerary.length-1]
+        @destination = itinerary[direction == GOING ? itinerary.length-1 : 0]
+      end
+
+      origin = direction == GOING ? @origin : @destination
+      destination = direction == GOING ? @destination : @origin
 
       data.css('.conteudo_abas_ext tr:last-child td').map.with_index do |period, index|
         hours = period.to_s.split('<br>').map do |hour|
@@ -65,7 +76,6 @@ module FloripaPublicTransit
         Schedule.new(PERIODS[index], hours, direction == GOING ? 'going' : 'returning', origin, destination)
       end
     end
-
 
     def request_data(direction, encoding = 'utf-8')
       url = "http://www.pmf.sc.gov.br/servicos/index.php?pagina=onibuslinha&idLinha=#{bus_line_number}"
