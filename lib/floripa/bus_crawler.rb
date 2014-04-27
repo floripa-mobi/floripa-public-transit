@@ -24,10 +24,9 @@ module FloripaPublicTransit
       name = fetch_name()
       operator = fetch_operator()
       itinerary = fetch_itinerary()
-      going_schedule = fetch_hours(GOING, itinerary)
-      returning_schedule = fetch_hours(RETURNING, itinerary)
+      schedule = fetch_schedule(itinerary)
 
-      Bus.new(bus_line_number, name, operator, itinerary, [going_schedule, returning_schedule].flatten)
+      Bus.new(bus_line_number, name, operator, itinerary, schedule)
     end
 
     private
@@ -47,6 +46,15 @@ module FloripaPublicTransit
 
       data.css('#conteudo_itinerario li').map do |address|
         address.content.gsub('» ', '').strip
+      end
+    end
+
+    def fetch_schedule(itinerary)
+      going_schedule = fetch_hours(GOING, itinerary)
+      returning_schedule = fetch_hours(RETURNING, itinerary)
+
+      [going_schedule, returning_schedule].flatten.select do |schedule|
+        schedule.hours.length > 0
       end
     end
 

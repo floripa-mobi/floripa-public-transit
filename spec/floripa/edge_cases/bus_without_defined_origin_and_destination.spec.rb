@@ -9,9 +9,12 @@ describe "bus_crawler" do
     it "should have the origin and destination taken from the itinerary" do
       expect(subject.schedules[0].origin).to eq 'TITRI'
       expect(subject.schedules[0].destination).to eq 'TITRI'
+    end
 
-      expect(subject.schedules[3].origin).to eq 'TITRI'
-      expect(subject.schedules[3].destination).to eq 'TITRI'
+    it "should only have schedules defined that have hours" do
+      subject.schedules.each do |schedule|
+        expect(schedule.hours.length).not_to eq 0
+      end
     end
   end
 end
