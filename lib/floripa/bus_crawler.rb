@@ -67,7 +67,7 @@ module FloripaPublicTransit
         @destination = targets[1]
       end
 
-      if @origin.empty?
+      if !@origin || @origin && @origin.empty?
         @origin = itinerary[direction == GOING ? 0 : itinerary.length-1]
         @destination = itinerary[direction == GOING ? itinerary.length-1 : 0]
       end
