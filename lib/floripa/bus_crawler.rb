@@ -8,7 +8,7 @@ require 'json'
 
 
 module FloripaPublicTransit
-  Bus = Struct.new(:name, :itinerary, :schedules)
+  Bus = Struct.new(:number, :name, :itinerary, :schedules)
   Schedule = Struct.new(:period, :hours, :direction, :origin, :destination)
 
   class BusCrawler
@@ -26,7 +26,7 @@ module FloripaPublicTransit
       going_schedule = fetch_hours(GOING, itinerary)
       returning_schedule = fetch_hours(RETURNING, itinerary)
 
-      Bus.new(name, itinerary, [going_schedule, returning_schedule].flatten)
+      Bus.new(bus_line_number, name, itinerary, [going_schedule, returning_schedule].flatten)
     end
 
     private
