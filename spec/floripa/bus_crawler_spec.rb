@@ -53,6 +53,10 @@ describe "bus_crawler" do
       expect(subject.number).to eq('177')
     end
 
+    it "should have the operator" do
+      expect(subject.operator).to eq('TRANSOL TRANSPORTE COLETIVO LTDA')
+    end
+
     it "should have the itinerary" do
       expected_itinerary = [
         'TITRI',
