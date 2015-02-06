@@ -11,14 +11,12 @@ module FloripaPublicTransit
   class BusListCrawler
     def fetch
       [
-        *fetch_lines('1'),
-        *fetch_lines('2'),
-        *fetch_lines('3'),
         *fetch_lines('4'),
-        *fetch_lines('5'),
-        *fetch_lines('6'),
+        *fetch_lines('7'),
+        *fetch_lines('8'),
         *fetch_lines('9'),
-        *fetch_lines('10')
+        *fetch_lines('10'),
+        *fetch_lines('11'),
       ]
     end
 

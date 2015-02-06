@@ -7,8 +7,9 @@ describe "bus_list_crawler" do
     subject { FloripaPublicTransit::BusListCrawler.new.fetch }
 
     it "should contain all bus line numbers" do
-      expect(subject.length).to eq 255
+      expect(subject.length).to eq 261
       expect(subject).to include('330')
+      expect(subject).to include('177')
       expect(subject).to include('320')
       expect(subject).to include('D766')
     end

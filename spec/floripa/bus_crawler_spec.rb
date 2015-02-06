@@ -54,7 +54,7 @@ describe "bus_crawler" do
     end
 
     it "should have the operator" do
-      expect(subject.operator).to eq('TRANSOL TRANSPORTE COLETIVO LTDA')
+      expect(subject.operator).to eq('SIM - SISTEMA INTEGRADO DE MOBILIDADE')
     end
 
     it "should have the itinerary" do
