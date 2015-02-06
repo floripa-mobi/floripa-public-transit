@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'floripa-public-transit'
-  s.version     = '0.0.1'
+  s.version     = '1.0.0'
   s.date        = '2014-04-14'
   s.summary     = 'Fetches public transit information from the Florianopolis city website'
   s.description = 'Provides a simple API to fetch latest public transit information of the Florianopolis city'
