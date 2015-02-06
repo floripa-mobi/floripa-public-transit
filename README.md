@@ -12,6 +12,22 @@ FloripaPublicTransit.fetch_line '177'
 
 Where `177` in the number of the 'Santa Monica' bus line.
 
+## Development
+
+You can use [fig.sh](http://fig.sh/) and [Docker](http://docker.io/).
+
+To run the tests:
+
+```bash
+fig run test
+```
+
+To build the gem:
+
+```bash
+fig run build
+```
+
 ## Authors
 
 * [Felipe Munhoz](https://github.com/fnmunhoz)

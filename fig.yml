@@ -1,0 +1,12 @@
+test:
+  build: .
+  command: rspec
+  volumes:
+    - .:/usr/src/app
+
+
+build:
+  build: .
+  command: gem build floripa-public-transit.gemspec
+  volumes:
+    - .:/usr/src/app
